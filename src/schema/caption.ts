@@ -28,7 +28,7 @@ export type CaptionStatusType = keyof typeof CaptionStatus;
 export type Caption = {
   id: number;
   url: string;
-  external_job_id: string | null;
+  title: string | null;
   data: string | null;
   status: CaptionStatusType;
 }

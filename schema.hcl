@@ -24,7 +24,7 @@ table "captions" {
     type = varchar(255)
   }
 
-  column "external_job_id" {
+  column "title" {
     type = varchar(255)
     null = true
   }
