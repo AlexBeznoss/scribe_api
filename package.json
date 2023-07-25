@@ -13,7 +13,7 @@
     "watch:ts": "tsc -w",
     "dev": "npm run build:ts && concurrently -k -p \"[{name}]\" -n \"TypeScript,App,Turso\" -c \"yellow.bold,cyan.bold,blue.bold\" \"npm:watch:ts\" \"npm:dev:start\" \"npm:dev:sqlite\"",
     "dev:sqlite": "turso dev -f dev.db",
-    "dev:start": "NODE_ENV='development' fastify start --ignore-watch=.ts$ -w -l info -P dist/app.js"
+    "dev:start": "NODE_ENV='development' fastify start --ignore-watch='dev.db ts$' -w -l info -P dist/app.js"
   },
   "keywords": [],
   "author": "",

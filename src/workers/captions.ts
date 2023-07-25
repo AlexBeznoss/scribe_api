@@ -1,10 +1,10 @@
 import fs from 'fs';
 import os from 'os';
 import crypto from 'crypto';
-import ytdl from "ytdl-core";
+import ytdl from 'ytdl-core';
 import FormData from 'form-data';
 import { Repo, ffmpeg } from '../utils'
-import { CaptionStatus, Caption } from '../schema/caption';
+import { CaptionStatus, Caption } from '../interfaces/captions';
 import { Job } from 'bullmq';
 import axios from 'axios';
 import type { videoInfo  } from 'ytdl-core';
@@ -42,15 +42,15 @@ export async function handle(job: Job): Promise<void> {
 
   try {
     const updateRes: ResultSet = await Repo.update('captions', captionId, { status: CaptionStatus.Processing });
-    const caption = updateRes.rows[0] as unknown as Caption;
+    const caption: Caption = updateRes.rows[0] as unknown as Caption;
     const info: videoInfo = await ytdl.getInfo(caption.url);
     const audioFilePath = `${os.tmpdir()}/${crypto.randomBytes(4).readUInt32LE(0)}.mp3`;
 
     await loadAudio(audioFilePath, info);
-    const data = await transcribe(audioFilePath);
+    const data: string = await transcribe(audioFilePath);
 
     await Repo.update('captions', captionId, {
-      data, 
+      data,
       title: info.videoDetails.title,
       status: CaptionStatus.Ready,
     });

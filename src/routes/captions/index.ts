@@ -1,10 +1,10 @@
 import { FastifyPluginAsync } from "fastify"
 import { createCaption, showCaption } from '../../controllers';
-import { CreateBody, CreateBodyType, ShowParams } from '../../schema/caption';
+import { CreateBodySchema, CreateBodyType, ShowParamsSchema } from '../../interfaces/captions';
 
 const captions: FastifyPluginAsync = async (fastify): Promise<void> => {
-  fastify.post<{Body: CreateBodyType}>('/', {schema: {body: CreateBody}}, createCaption(fastify));
-  fastify.get<{Params: ShowParams}>('/:id', showCaption(fastify))
+  fastify.post<{Body: CreateBodyType}>('/', {schema: {body: CreateBodySchema}}, createCaption(fastify));
+  fastify.get<{Params: ShowParamsSchema}>('/:id', showCaption(fastify))
 };
 
 export default captions;
