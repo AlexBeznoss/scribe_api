@@ -1,11 +1,17 @@
 import { createClient  } from "@libsql/client";
 import type { Client, ResultSet, Row, InArgs } from '@libsql/client';
 
+const PAGINATION_LIMIT = 10;
 export function dbConnection() : Client {
   return createClient({
     url: process.env.DATABASE_URL as string,
     authToken: process.env.DATABASE_TOKEN
   })
+}
+
+type PaginatedResult = {
+  rows: Row[],
+  hasNext: boolean
 }
 
 export const Repo = {
@@ -38,6 +44,18 @@ export const Repo = {
       sql: `update ${table} set ${updates} where id = :id returning *`,
       args: Object.assign(changeset, {id})
     })
+  },
+
+  paginated: async (table: string, columns: string[], page: string | number): Promise<PaginatedResult> => {
+    const limit = PAGINATION_LIMIT + 1;
+    const offset = (Number(page) - 1) * PAGINATION_LIMIT;
+    const sql = `select ${columns.join(', ')} from ${table} order by created_at DESC limit ${limit} offset ${offset}`;
+    const res: ResultSet = await dbConnection().execute(sql);
+
+    return {
+      rows: res.rows.slice(0, PAGINATION_LIMIT - 2),
+      hasNext: res.rows.length === PAGINATION_LIMIT + 1
+    }
   }
 
 }

@@ -1,0 +1,9 @@
+{
+  "title": "Captions#create Body Schema",
+  "type": "object",
+  "properties": {
+    "url": { "type": "string" }
+  },
+  "additionalProperties": false,
+  "required": ["url"]
+}

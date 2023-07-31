@@ -1,0 +1,9 @@
+{
+  "title": "Captions#show Params Schema",
+  "type": "object",
+  "properties": {
+    "id": { "type": "integer" }
+  },
+  "additionalProperties": false,
+  "required": ["id"]
+}

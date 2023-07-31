@@ -1,0 +1,9 @@
+{
+  "title": "Captions#index Querystring Schema",
+  "type": "object",
+  "properties": {
+    "page": { "type": "integer", "minimum": 1  }
+  },
+  "additionalProperties": false,
+  "required": []
+}

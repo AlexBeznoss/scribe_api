@@ -1,20 +1,13 @@
 import type { FastifyRequest } from 'fastify';
-import { Static, Type } from '@sinclair/typebox';
-
-export const CreateBodySchema = Type.Object({
-  url: Type.String(),
-});
-export type CreateBodyType = Static<typeof CreateBodySchema>;
+import { CaptionsShowParamsSchema as ShowParamsInterface } from '../@types/captions/show.params';
+import { CaptionsCreateBodySchema as CreateBodyInterface } from '../@types/captions/create.body';
 
 export interface CreateRequest extends FastifyRequest {
-  body: CreateBodyType;
+  body: CreateBodyInterface;
 }
 
-export type ShowParamsSchema = {
-  id: string
-}
 export interface ShowRequest extends FastifyRequest {
-  params: ShowParamsSchema
+  params: ShowParamsInterface
 }
 
 export enum CaptionStatus {
